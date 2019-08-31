@@ -89,20 +89,16 @@ public class Karatsuba{
         else
             while (a.length() < b.length()) a = "0" + a;
 
-        char[] aChar = a.toCharArray(), bChar = b.toCharArray(), res = new char[a.length()+1];
-        Arrays.fill(res, '0');
+        char[] aChar = a.toCharArray(), bChar = b.toCharArray(), res = new char[a.length()];
 
         for (int index = a.length()-1; index >= 0; index--)
         {
             if (aChar[index] < bChar[index] && index > 0)
             {
                 aChar[index-1] = (char)(aChar[index-1] - 1);
-                res[index+1] = (char)((10 + aChar[index] - 48) - (bChar[index] - 48) + 48);
+                res[index] = (char)((10 + aChar[index] - 48) - (bChar[index] - 48) + 48);
             }
-            else
-            {
-                res[index+1] = (char)((aChar[index] - 48) - (bChar[index] - 48) + 48);
-            }
+            else res[index] = (char)((aChar[index] - 48) - (bChar[index] - 48) + 48);
         }
         return String.valueOf(res);
     }
