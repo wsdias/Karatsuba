@@ -5,20 +5,23 @@
  *
  *  2019/2
  *
- *  Baseado em: https://en.wikipedia.org/wiki/Karatsuba_algorithm#Pseudocode    
- *
  */
 
 import java.util.Arrays;
 
-public class Karatsuba{
+public class OldKaratsuba{
 
     public static void main (String[] args){
 
         if (args.length == 2)
-            System.out.println(Karatsuba.KMult(args[0], args[1]));
-        else
-            System.out.println("Inválido! Formato: java Karatsuba arg1 arg2");
+        {
+            //System.out.println(args[0]+" ; "+args[1]);
+            String res = OldKaratsuba.KMult(args[0], args[1]);
+            //String res = KAdd(args[0], args[1]);
+            while (res.charAt(0) == '0') res = res.substring(1);
+            System.out.println(res);
+        }
+        else System.out.println("Inválido! Formato: java OldKaratsuba arg1 arg2");
     }
 
     private static String KMult(String a, String b){
@@ -45,12 +48,12 @@ public class Karatsuba{
 
             String shift = "";
             while (shift.length() < a.length()/2) shift += "0";
+            //System.out.println(a+" ; "+b);
+            //System.out.println(a1+" ; "+a2+" | "+b1+" ; "+b2);
+            //System.out.println(shift);
+            //System.out.println();
 
-            String c2 = KMult(a1, b1);
-            String c1 = KMult(KAdd(a1, a2), KAdd(b1, b2));
-            String c0 = KMult(a2, b2);
-
-            return KAdd(c2 + shift + shift, KAdd(KSub(KSub(c1, c2), c0) + shift, c0));
+            return KAdd (KMult(a1, b1) + shift + shift, KAdd (KAdd (KMult(a1, b2), KMult(a2, b1)) + shift, KMult(a2, b2)));
         }
     }
 
@@ -77,35 +80,6 @@ public class Karatsuba{
                 res[index] = '1';
             }
         }
-        String tmp = String.valueOf(res);
-        while (tmp.length() > 1 && tmp.charAt(0) == '0') tmp = tmp.substring(1);
-        return tmp;
-    }
-
-    private static String KSub(String a, String b){
-
-        if (a.length() > b.length())
-            while (b.length() < a.length()) b = "0" + b;
-        else
-            while (a.length() < b.length()) a = "0" + a;
-
-        char[] aChar = a.toCharArray(), bChar = b.toCharArray(), res = new char[a.length()+1];
-        Arrays.fill(res, '0');
-
-        for (int index = a.length()-1; index >= 0; index--)
-        {
-            if (aChar[index] < bChar[index] && index > 0)
-            {
-                aChar[index-1] = (char)(aChar[index-1] - 1);
-                res[index+1] = (char)((10 + aChar[index] - 48) - (bChar[index] - 48) + 48);
-            }
-            else
-            {
-                res[index+1] = (char)((aChar[index] - 48) - (bChar[index] - 48) + 48);
-            }
-        }
         return String.valueOf(res);
     }
 }
-
-
