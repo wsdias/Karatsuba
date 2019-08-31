@@ -10,9 +10,18 @@ import java.util.Arrays;
 
 public class Karatsuba{
 
-    public Karatsuba(){}
+    public static void main (String[] args){
 
-    public static String KMult(String a, String b){
+        if (args.length == 2)
+        {
+            //System.out.println(args[0]+" ; "+args[1]);
+            //System.out.println(Karatsuba.KMult(args[0], args[1]));
+            System.out.println(KAdd(args[0], args[1]));
+        }
+        else System.out.println("Inválido! Formato: java Karatsuba arg1 arg2");
+    }
+
+    private static String KMult(String a, String b){
     
         if (a.length() == 1 && b.length() == 1)
             return String.valueOf(Integer.valueOf(a) * Integer.valueOf(b));
@@ -39,12 +48,13 @@ public class Karatsuba{
             System.out.println(a+" ; "+b);
             System.out.println(a1+" ; "+a2+" | "+b1+" ; "+b2);
             //System.out.println(shift);
+            System.out.println();
 
-            //return KAdd (KMult(a1, b1) + shift + shift, KAdd (KAdd (KMult(a1, b2), KMult(a2, b1)) + shift, KMult(a2, b2)));
+            return KAdd (KMult(a1, b1) + shift + shift, KAdd (KAdd (KMult(a1, b2), KMult(a2, b1)) + shift, KMult(a2, b2)));
         }
     }
 
-    public static String KAdd(String a, String b){
+    private static String KAdd(String a, String b){
 
         int aux;
 
