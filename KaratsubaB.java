@@ -17,8 +17,9 @@ public class KaratsubaB{
 
         if (args.length == 2)
         {
-            //String res = KaratsubaB.KMult(args[0], args[1]);
-            String res = KSub(args[0], args[1]);
+            //System.out.println(args[0]+" "+args[1]);
+            String res = KaratsubaB.KMult(args[0], args[1]);
+            //String res = KSub(args[0], args[1]);
             //while (res.charAt(0) == '0') res = res.substring(1);
             System.out.println(res);
         }
@@ -50,9 +51,26 @@ public class KaratsubaB{
             String shift = "";
             while (shift.length() < a.length()/2) shift += "0";
 
+            //System.out.println(a+" ; "+b);
+            // 0 ; 1 | 0 ; 9
+            //System.out.println(a1+" ; "+a2+" | "+b1+" ; "+b2);    
+
             String c2 = KMult(a1, b1);
-            String c1 = KAdd(KMult(a1, b2), KMult(a2, b1));
+            String c1 = KMult(KAdd(a1, a2), KAdd(b1, b2));
             String c0 = KMult(a2, b2);
+
+            /*String resA = KAdd(a1, a2);
+            while (resA.charAt(0) == '0') resA = resA.substring(1);
+            String resB = KAdd(b1, b2);
+            while (resB.charAt(0) == '0') resB = resB.substring(1);
+            System.out.println(a1+" + "+a2+" = "+resA+"    "+b1+" + "+b2+" = "+resB);*/
+
+            System.out.println("c2: "+c2);
+            System.out.println("c1: "+c1);
+            System.out.println("c0: "+c0);
+
+            System.out.println(KSub(KSub(c1, c2), c0)+"__SUB");
+            System.out.println(KAdd(KSub(KSub(c1, c2), c0) + shift, c0)+"__ADD");
 
             return KAdd(c2 + shift + shift, KAdd(KSub(KSub(c1, c2), c0) + shift, c0));
         }
@@ -81,7 +99,11 @@ public class KaratsubaB{
                 res[index] = '1';
             }
         }
-        return String.valueOf(res);
+        System.out.println("@__ADD "+String.valueOf(res)+" !!!");
+        String tmp = String.valueOf(res);
+        while (tmp.length() > 1 && tmp.charAt(0) == '0') tmp = tmp.substring(1);
+        System.out.println("#__ADD "+String.valueOf(tmp)+" !!!");
+        return tmp;
     }
 
     private static String KSub(String a, String b){
@@ -93,7 +115,7 @@ public class KaratsubaB{
         else
             while (a.length() < b.length()) a = "0" + a;
 
-        System.out.println(a+" ; "+b);
+        //System.out.println(a+" ; "+b);
 
         char[] aChar = a.toCharArray(), bChar = b.toCharArray(), res = new char[a.length()+1];
         Arrays.fill(res, '0');
@@ -102,18 +124,15 @@ public class KaratsubaB{
         {
             if (aChar[index] < bChar[index] && index > 0)
             {
-                //System.out.println(aChar[index]+"!");
-                aChar
+                aChar[index-1] = (char)(aChar[index-1] - 1);
+                res[index+1] = (char)((10 + aChar[index] - 48) - (bChar[index] - 48) + 48);
             }
-
-            aux = (aChar[index]-48) - (bChar[index]-48);
-            System.out.println(aux);
-            if (aux < 0)
+            else
             {
-                
+                res[index+1] = (char)((aChar[index] - 48) - (bChar[index] - 48) + 48);
             }
-            res[index+1] = (char)(aux + 48);
         }
+        //System.out.println("Chegou aqui!");
         return String.valueOf(res);
     }
 }
