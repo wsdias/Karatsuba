@@ -2,6 +2,7 @@
  *  T1 - Projeto e Otimização de Algoritmos
  *
  *  Willian Schmiele Dias
+ *
  *  2019/2
  *
  */
@@ -15,8 +16,10 @@ public class Karatsuba{
         if (args.length == 2)
         {
             //System.out.println(args[0]+" ; "+args[1]);
-            //System.out.println(Karatsuba.KMult(args[0], args[1]));
-            System.out.println(KAdd(args[0], args[1]));
+            String res = Karatsuba.KMult(args[0], args[1]);
+            //String res = KAdd(args[0], args[1]);
+            while (res.charAt(0) == '0') res = res.substring(1);
+            System.out.println(res);
         }
         else System.out.println("Inválido! Formato: java Karatsuba arg1 arg2");
     }
@@ -45,10 +48,10 @@ public class Karatsuba{
 
             String shift = "";
             while (shift.length() < a.length()/2) shift += "0";
-            System.out.println(a+" ; "+b);
-            System.out.println(a1+" ; "+a2+" | "+b1+" ; "+b2);
+            //System.out.println(a+" ; "+b);
+            //System.out.println(a1+" ; "+a2+" | "+b1+" ; "+b2);
             //System.out.println(shift);
-            System.out.println();
+            //System.out.println();
 
             return KAdd (KMult(a1, b1) + shift + shift, KAdd (KAdd (KMult(a1, b2), KMult(a2, b1)) + shift, KMult(a2, b2)));
         }
