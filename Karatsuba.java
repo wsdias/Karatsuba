@@ -22,8 +22,7 @@ public class Karatsuba{
             else if (args[0].charAt(0) != '-' && args[1].charAt(0) == '-') signal = "-";
             System.out.println(signal + Karatsuba.KMult(args[0].replace("-", ""), args[1].replace("-", "")));
         }
-        else
-            System.out.println("Inválido! Formato: java Karatsuba arg1 arg2");
+        else System.out.println("Inválido! Formato: java Karatsuba arg1 arg2");
     }
 
     private static String KMult(String a, String b){
