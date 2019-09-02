@@ -16,7 +16,12 @@ public class Karatsuba{
     public static void main (String[] args){
 
         if (args.length == 2)
-            System.out.println(Karatsuba.KMult(args[0], args[1]));
+        {
+            String signal = "";
+            if (args[0].charAt(0) == '-' && args[1].charAt(0) != '-') signal = "-";
+            else if (args[0].charAt(0) != '-' && args[1].charAt(0) == '-') signal = "-";
+            System.out.println(signal + Karatsuba.KMult(args[0].replace("-", ""), args[1].replace("-", "")));
+        }
         else
             System.out.println("Inválido! Formato: java Karatsuba arg1 arg2");
     }
